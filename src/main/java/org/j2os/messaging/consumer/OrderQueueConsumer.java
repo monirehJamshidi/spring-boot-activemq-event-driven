@@ -1,5 +1,6 @@
 package org.j2os.messaging.consumer;
 
+import lombok.extern.slf4j.Slf4j;
 import org.j2os.domain.model.Order;
 import org.j2os.service.OrderProcessingService;
 import org.springframework.jms.annotation.JmsListener;
@@ -7,6 +8,7 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
+@Slf4j
 public class OrderQueueConsumer {
 
     private final OrderProcessingService orderProcessingService;
@@ -20,8 +22,8 @@ public class OrderQueueConsumer {
             containerFactory = "queueListenerFactory"
     )
     public void consume(Order order){
-        System.out.println("Processing order: " + order.orderId());
-//        orderProcessingService.process(order);
+        log.info("Processing order: " + order.orderId());
+        orderProcessingService.process(order);
     }
 
 
